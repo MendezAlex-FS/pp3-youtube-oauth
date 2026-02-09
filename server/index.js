@@ -43,16 +43,16 @@ app.use((err, req, res, next) => {
 
 //TODO: Temporary code for week 1.
 console.log("------- Env Vars -------");
-console.log(process.env.PORT);
-console.log(process.env.NODE_ENV);
-console.log(process.env.DB_USER);
-console.log(process.env.DB_PASS);
-console.log(process.env.DB_NAME);
-console.log(process.env.DB_HOST);
-console.log(process.env.GOOGLE_CLIENT_ID);
-console.log(process.env.GOOGLE_CLIENT_SECRET);
-console.log(process.env.GOOGLE_REDIRECT_URI);
-console.log(process.env.JWT_SECRET);
+console.log("PORT=" + process.env.PORT);
+console.log("NODE_ENV=" + process.env.NODE_ENV);
+console.log("DB_USER=" + process.env.DB_USER);
+console.log("DB_PASS=" + process.env.DB_PASS);
+console.log("DB_NAME=" + process.env.DB_NAME);
+console.log("DB_HOST=" + process.env.DB_HOST);
+console.log("GOOGLE_CLIENT_ID=" + process.env.GOOGLE_CLIENT_ID);
+console.log("GOOGLE_CLIENT_SECRET=" + process.env.GOOGLE_CLIENT_SECRET);
+console.log("GOOGLE_REDIRECT_URI=" + process.env.GOOGLE_REDIRECT_URI);
+console.log("JWT_SECRET=" + process.env.JWT_SECRET);
 console.log("------- /Env Vars -------");
 
 // Set our app to listen on port 3000
