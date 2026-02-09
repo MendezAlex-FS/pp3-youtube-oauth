@@ -41,6 +41,20 @@ app.use((err, req, res, next) => {
   });
 });
 
+//TODO: Temporary code for week 1.
+console.log("------- Env Vars -------");
+console.log(process.env.PORT);
+console.log(process.env.NODE_ENV);
+console.log(process.env.DB_USER);
+console.log(process.env.DB_PASS);
+console.log(process.env.DB_NAME);
+console.log(process.env.DB_HOST);
+console.log(process.env.GOOGLE_CLIENT_ID);
+console.log(process.env.GOOGLE_CLIENT_SECRET);
+console.log(process.env.GOOGLE_REDIRECT_URI);
+console.log(process.env.JWT_SECRET);
+console.log("------- /Env Vars -------");
+
 // Set our app to listen on port 3000
 const PORT = process.env.PORT || 3000;
 
