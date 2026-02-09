@@ -1,4 +1,4 @@
-# YouTube Playlist Manipulator
+# Google OAuth with YouTube Data API
 
 ## Project Overview
 
