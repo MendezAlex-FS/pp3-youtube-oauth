@@ -1,2 +1,18 @@
-node_modules/
+# Standard ignores
+node_modules
 .env
+*.local
+
+# Editor directories and files
+.vscode/
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Docker storage
+var/*
+!var/.gitkeep
