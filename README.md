@@ -114,7 +114,7 @@ npm run dev
 ### 3. Server runs on
 
 ```bash
-    http://localhost:3001
+http://localhost:3001
 ```
 
 ### 4. Install Client
@@ -232,3 +232,4 @@ GET /api/v1/youtube/recent
 
 Client: [http://localhost:5173](http://localhost:5173/)  
 Server: [http://localhost:3001](http://localhost:3001)
+
