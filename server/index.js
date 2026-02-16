@@ -15,13 +15,6 @@ const app = express();
 app.use(morgan("dev"));  // Mainly for debugging. Logs req in console.
 app.use(express.json()); // Put all data in req.body
 app.use(cors({
-  origin: [
-    process.env.CLIENT_ORIGIN,
-    process.env.YOUTUBE_ORIGIN
-  ],
-  allowedHeaders: ["Content-Type", "Authorization"]
-}));
-app.use(cors({
   origin: process.env.CLIENT_ORIGIN,
   allowedHeaders: ["Content-Type", "Authorization"]
 })); // Handles the CORs policies
