@@ -108,13 +108,18 @@ cd pp3-youtube-oauth
 ```bash
 cd server
 npm install
+
+# Create the database - only if does not exist. DB name will be whatever is in DB_NAME=your_db_name in .env file.
+# NOTE: IF .ENV VARIABLES ARE NOT SET. YOU WILL GET AN ERROR ON THE COMMAND BELOW.
+npm run db:setup
+
 npm run dev
 ```
 
 ### 3. Server runs on
 
 ```bash
-    http://localhost:3001
+http://localhost:3001
 ```
 
 ### 4. Install Client
@@ -232,3 +237,5 @@ GET /api/v1/youtube/recent
 
 Client: [http://localhost:5173](http://localhost:5173/)  
 Server: [http://localhost:3001](http://localhost:3001)
+
+
