@@ -20,6 +20,9 @@ const login = (req, res) => {
     client_id: process.env.GOOGLE_CLIENT_ID,
     redirect_uri: process.env.GOOGLE_REDIRECT_URI,
     response_type: "code",
+    // This line is what allows this application to work even if no scopes are defined
+    // in that console. In production, the scopes need to be defined. Especially for
+    // sensitive/restricted scopes.
     scope: "openid email profile https://www.googleapis.com/auth/youtube.readonly",
     access_type: "offline",
     prompt: "consent",
