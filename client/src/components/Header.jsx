@@ -21,24 +21,41 @@ const styles = {
       "dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:placeholder:text-zinc-500",
       "dark:focus:ring-red-900/30 dark:disabled:bg-zinc-900/40"
     ].join(" "),
-  searchBtnBase: "absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-4 py-2 text-sm font-extrabold transition",
+  searchBtnBase:
+    "absolute right-2 top-1/2 -translate-y-1/2 rounded-xl px-4 py-2 text-sm font-extrabold transition",
   searchBtnAuthed: "bg-youtube-red text-white hover:bg-youtube-redDark",
-  searchBtnDisabled: "bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500",
+  searchBtnDisabled:
+    "bg-zinc-200 text-zinc-500 dark:bg-zinc-800 dark:text-zinc-500",
   right: "flex min-w-[180px] items-center justify-end gap-2",
   darkToggle:
     [
       "rounded-xl border border-zinc-200 bg-white px-3 py-2 text-xs font-bold text-zinc-800",
       "transition hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-200 dark:hover:bg-zinc-800"
     ].join(" "),
-  login: "rounded-xl bg-youtube-red px-4 py-2 text-xs font-extrabold text-white transition hover:bg-youtube-redDark",
+  login:
+    "rounded-xl bg-youtube-red px-4 py-2 text-xs font-extrabold text-white transition hover:bg-youtube-redDark",
   logout:
     [
       "rounded-xl border border-zinc-200 bg-white px-4 py-2 text-xs font-extrabold text-zinc-900 transition",
       "hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800"
     ].join(" "),
-
 };
 
+/**
+ *
+ * Top navigation header component.
+ *
+ * @param {*} title Header title text
+ * @param {*} subTitle Header subtitle text
+ * @param {*} authed Whether the user is authenticated
+ * @param {*} query Current search input value
+ * @param {*} onQueryChange Callback to update the query state
+ * @param {*} onSearch Callback to execute a search
+ * @param {*} onLogout Callback to log out the user
+ * @param {*} dark Whether dark mode is enabled
+ * @param {*} onToggleDark Callback to toggle dark mode
+ * @returns {*} React component representing the sticky header
+ */
 export default function Header({
   title = "PP3 Google OAuth",
   subTitle = "YouTube Data API",
@@ -65,6 +82,7 @@ export default function Header({
             <div className={styles.subtitle}>{subTitle}</div>
           </div>
         </div>
+
         <div className={styles.center}>
           <form
             onSubmit={(e) => {
@@ -81,10 +99,17 @@ export default function Header({
                 placeholder={authed ? "Search YouTube videos…" : "Login to search…"}
                 className={styles.input}
               />
-              <button type="submit" disabled={!authed} className={searchBtnClass}>Search</button>
+              <button
+                type="submit"
+                disabled={!authed}
+                className={searchBtnClass}
+              >
+                Search
+              </button>
             </div>
           </form>
         </div>
+
         <div className={styles.right}>
           <button
             onClick={onToggleDark}
@@ -94,6 +119,7 @@ export default function Header({
           >
             {dark ? "Light" : "Dark"}
           </button>
+
           {!authed ? (
             <a href={loginUrl()} className={styles.login}>
               Login

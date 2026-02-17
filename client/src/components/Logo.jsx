@@ -5,6 +5,13 @@ const styles = {
   triangle: "h-0 w-0 border-y-[9px] border-y-transparent border-l-[14px] border-l-white translate-x-[1px]"
 };
 
+/**
+ *
+ * Renders a custom YouTube-style logo using pure CSS (Tailwind utility classes).
+ *
+ * @param {*} className Optional size classes
+ * @returns {*} React component representing the logo
+ */
 export default function Logo({ className = "w-8 h-8" }) {
   return (
     <div className={`${styles.wrapper} ${className}`}>

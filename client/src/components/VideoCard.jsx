@@ -1,3 +1,10 @@
+/**
+ *
+ * Selects the best available thumbnail URL from a YouTube thumbnail object.
+ *
+ * @param {*} thumbnail YouTube thumbnail object
+ * @returns {string} Best available thumbnail URL or empty string if none exist
+ */
 function pickThumb(thumbnail) {
   return (
     thumbnail?.maxres?.url ||
@@ -27,31 +34,54 @@ const styles = {
   description: "mt-3 line-clamp-3 text-sm text-zinc-700 dark:text-zinc-300"
 };
 
+/**
+ *
+ * Renders a YouTube video card.
+ * 
+ * @param {*} video Normalized video object
+ * @returns {*} React component representing a styled video card
+ */
 export default function VideoCard({ video }) {
   const thumb = pickThumb(video?.thumbnails);
-  const link = video?.videoId ? `https://www.youtube.com/watch?v=${video.videoId}` : "#";
+  const link = video?.videoId
+    ? `https://www.youtube.com/watch?v=${video.videoId}`
+    : "#";
 
   return (
     <a href={link} target="_blank" rel="noreferrer" className={styles.card}>
       <div className={styles.mediaWrap}>
         {thumb ? (
-          <img src={thumb} alt={video?.title || "video"} className={styles.image} loading="lazy" />
+          <img
+            src={thumb}
+            alt={video?.title || "video"}
+            className={styles.image}
+            loading="lazy"
+          />
         ) : (
           <div className={styles.noThumb}>No thumbnail</div>
         )}
       </div>
+
       <div className={styles.body}>
         <div className={styles.title}>
           {video?.title || "No title available"}
         </div>
+
         <div className={styles.meta}>
-          <span className={styles.channel}>{video?.channelTitle || "No channel available"}</span>
+          <span className={styles.channel}>
+            {video?.channelTitle || "No channel available"}
+          </span>
           <span className={styles.dot}>•</span>
           <span className={styles.date}>
-            {video?.publishedAt ? new Date(video.publishedAt).toLocaleDateString() : ""}
+            {video?.publishedAt
+              ? new Date(video.publishedAt).toLocaleDateString()
+              : ""}
           </span>
         </div>
-        {video?.description ? (<div className={styles.description}>{video.description}</div>) : null}
+
+        {video?.description ? (
+          <div className={styles.description}>{video.description}</div>
+        ) : null}
       </div>
     </a>
   );

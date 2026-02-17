@@ -2,14 +2,32 @@ const { User } = require("../models");
 const { verify } = require("../utils/jwt");
 const { requestYouTubeData } = require("../services/youTubeService");
 
+/**
+ *
+ * Extracts and verifies the JWT from the Authorization header.
+ *
+ * @param {*} req Express request object
+ * @returns {*} Decoded JWT payload if valid; otherwise null
+ */
 const getUser = (req) => {
   const auth = req.headers.authorization;
   if (!auth) return null;
+
   const token = auth.split(" ")[1];
   const payload = verify(token, process.env.JWT_SECRET);
   return payload;
 };
 
+/**
+ *
+ * GET /recent
+ *
+ * Retrieves the authenticated user's uploaded videos (recent uploads).
+ *
+ * @param {*} req Express request object
+ * @param {*} res Express response object
+ * @returns {*} JSON response containing playlist items or error
+ */
 const recent = async (req, res) => {
   try {
     const payload = getUser(req);
@@ -25,7 +43,8 @@ const recent = async (req, res) => {
     });
 
     const uploadsId = ch.items?.[0]?.contentDetails?.relatedPlaylists?.uploads;
-    if (!uploadsId) return res.status(500).json({ error: "Could not find uploads playlist" });
+    if (!uploadsId)
+      return res.status(500).json({ error: "Could not find uploads playlist" });
 
     const pl = await requestYouTubeData("playlistItems", user.accessToken, {
       part: "snippet",
@@ -39,6 +58,16 @@ const recent = async (req, res) => {
   }
 };
 
+/**
+ *
+ * GET /search?q=...
+ *
+ * Searches the authenticated user's YouTube videos.
+ *
+ * @param {*} req Express request object
+ * @param {*} res Express response object
+ * @returns {*} JSON response containing search results or error
+ */
 const search = async (req, res) => {
   try {
     const payload = getUser(req);

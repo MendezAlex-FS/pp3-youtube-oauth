@@ -27,6 +27,19 @@ const styles = {
   grid: "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3",
 };
 
+/**
+ *
+ * Results view for the authenticated portion of the app.
+ *
+ * @param {*} results Array of search results (used to determine UI mode)
+ * @param {*} shownVideos Array of videos to render (results or recent)
+ * @param {*} query Current search query string
+ * @param {*} me Auth user payload
+ * @param {*} loadingRecent Whether the recent uploads request is loading
+ * @param {*} loadingSearch Whether the search request is loading
+ * @param {*} error Error message string to display (if any)
+ * @returns {*} React component for rendering results and video grid
+ */
 export default function Results({
   results = [],
   shownVideos = [],

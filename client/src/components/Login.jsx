@@ -14,15 +14,28 @@ const styles = {
   footnote: "mt-6 text-xs text-zinc-500 dark:text-zinc-500"
 };
 
+/**
+ *
+ * Login screen component displayed when the user is not authenticated.
+ *
+ * @param {*} none
+ * @returns {*} React component representing the login screen
+ */
 export default function Login() {
   return (
     <div className={styles.wrapper}>
       <Logo className={styles.logo} />
+
       <h1 className={styles.title}>Please Login</h1>
+
       <p className={styles.subtitle}>
         To search for YouTube videos, you must login to your Google account.
       </p>
-      <a href={loginUrl()} className={styles.loginBtn}>Login</a>
+
+      <a href={loginUrl()} className={styles.loginBtn}>
+        Login
+      </a>
+
       <div className={styles.footnote}>
         You’ll be redirected to Google, then back here.
       </div>

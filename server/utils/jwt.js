@@ -1,5 +1,13 @@
 const crypto = require("crypto");
 
+/**
+ *
+ * Converts a Buffer (or buffer-like input) into a Base64URL-encoded string.
+ * Base64URL is standard Base64 with URL-safe characters and no "=" padding.
+ *
+ * @param {*} buf Buffer or buffer-like data to encode
+ * @returns {string} Base64URL-encoded string (no padding)
+ */
 function base64urlEncode(buf) {
   return Buffer.from(buf)
     .toString("base64")
@@ -8,12 +16,32 @@ function base64urlEncode(buf) {
     .replace(/=+$/, "");
 }
 
+/**
+ *
+ * Decodes a Base64URL-encoded string into a Buffer.
+ * Automatically restores "=" padding and converts URL-safe chars back to Base64.
+ *
+ * @param {*} str Base64URL string to decode
+ * @returns {Buffer} Decoded bytes as a Buffer
+ */
 function base64urlDecode(str) {
   const pad = str.length % 4 === 0 ? "" : "=".repeat(4 - (str.length % 4));
   const b64 = (str + pad).replace(/-/g, "+").replace(/_/g, "/");
   return Buffer.from(b64, "base64");
 }
 
+/**
+ *
+ * Signs a payload into a JWT string using HS256 (HMAC-SHA256).
+ * Automatically adds `iat` (issued-at) and `exp` (expiration) claims.
+ *
+ * @param {*} payload Plain object payload to include in the JWT
+ * @param {*} secret Secret used to HMAC-sign the token (JWT_SECRET)
+ * @param {*} options Optional signing options
+ * @param {*} options.expiresInSeconds Token lifetime in seconds (default: 7 days)
+ * @returns {string} Signed JWT string in the format "header.payload.signature"
+ * @throws {Error} If `secret` is missing
+ */
 function sign(payload, secret, { expiresInSeconds = 60 * 60 * 24 * 7 } = {}) {
   if (!secret) throw new Error("JWT_SECRET is missing");
 
@@ -32,6 +60,16 @@ function sign(payload, secret, { expiresInSeconds = 60 * 60 * 24 * 7 } = {}) {
   return `${data}.${sig}`;
 }
 
+/**
+ *
+ * Verifies a JWT string signed with HS256 (HMAC-SHA256).
+ * Checks token format, validates signature using timing-safe comparison,
+ * and rejects expired tokens (based on `exp` claim).
+ *
+ * @param {*} token JWT string to verify
+ * @param {*} secret Secret used to verify the HMAC signature (JWT_SECRET)
+ * @returns {*} Decoded payload object if valid; otherwise null
+ */
 function verify(token, secret) {
   try {
     if (!token || !secret) return null;
