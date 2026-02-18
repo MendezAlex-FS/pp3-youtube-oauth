@@ -187,6 +187,13 @@ GET /api/v1/auth/me
 Authorization: Bearer <jwt>
 ```
 
+#### Check Authentication Status
+
+```bash
+GET /api/v1/auth/status
+Authorization: Bearer <jwt>
+```
+
 #### Logout
 
 ```bash
