@@ -1,22 +1,4 @@
-const { User } = require("../models");
-const { verify } = require("../utils/jwt");
 const { requestYouTubeData } = require("../services/youTubeService");
-
-/**
- *
- * Extracts and verifies the JWT from the Authorization header.
- *
- * @param {*} req Express request object
- * @returns {*} Decoded JWT payload if valid; otherwise null
- */
-const getUser = (req) => {
-  const auth = req.headers.authorization;
-  if (!auth) return null;
-
-  const token = auth.split(" ")[1];
-  const payload = verify(token, process.env.JWT_SECRET);
-  return payload;
-};
 
 /**
  *
@@ -30,10 +12,7 @@ const getUser = (req) => {
  */
 const recent = async (req, res) => {
   try {
-    const payload = getUser(req);
-    if (!payload) return res.status(401).json({ error: "Unauthorized" });
-
-    const user = await User.findByPk(payload.uid);
+    const user = req.user;
     if (!user) return res.status(401).json({ error: "User not found" });
     if (!user.accessToken) return res.status(401).json({ error: "No access token" });
 
@@ -70,10 +49,7 @@ const recent = async (req, res) => {
  */
 const search = async (req, res) => {
   try {
-    const payload = getUser(req);
-    if (!payload) return res.status(401).json({ error: "Unauthorized" });
-
-    const user = await User.findByPk(payload.uid);
+    const user = req.user;
     if (!user) return res.status(401).json({ error: "User not found" });
     if (!user.accessToken) return res.status(401).json({ error: "No access token" });
 

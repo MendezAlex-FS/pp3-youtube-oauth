@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const youTubeCtrl = require("../controllers/youTubeController");
-const { requireAuth } = require("../utils/auth");
+const { requireAuth, requireYouTubeAuth } = require("../middleware/auth");
 
 /**
  *
@@ -12,7 +12,7 @@ const { requireAuth } = require("../utils/auth");
  * requireAuth middleware for the JWT.
  *
  */
-router.get("/recent", requireAuth, youTubeCtrl.recent);
+router.get("/recent", requireAuth, requireYouTubeAuth, youTubeCtrl.recent);
 
 /**
  *
@@ -23,6 +23,6 @@ router.get("/recent", requireAuth, youTubeCtrl.recent);
  * requireAuth middleware for the JWT.
  *
  */
-router.get("/search", requireAuth, youTubeCtrl.search);
+router.get("/search", requireAuth, requireYouTubeAuth, youTubeCtrl.search);
 
 module.exports = router;
