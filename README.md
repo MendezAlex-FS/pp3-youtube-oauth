@@ -89,7 +89,6 @@ JWT_SECRET=replace_with_strong_secret
 
 # Client related settings
 CLIENT_ORIGIN=http://localhost:5173
-YOUTUBE_ORIGIN=https://lh3.googleusercontent.com/
 ```
 
 ## Installation
