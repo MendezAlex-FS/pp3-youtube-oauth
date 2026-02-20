@@ -1,8 +1,0 @@
-{
-  "watch": ["."],
-  "ext": "js,json,twig",
-  "ignore": ["node_modules/", "var/", "public/"],
-  "exec": "node ./index.js",
-  "legacyWatch": true,
-  "delay": 500
-}

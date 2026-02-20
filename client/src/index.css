@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-youtube-red: #FF0000;
+  --color-youtube-red-dark: #CC0000;
+  --color-youtube-black: #0F0F0F;
+  --color-youtube-gray: #272727;
+}
