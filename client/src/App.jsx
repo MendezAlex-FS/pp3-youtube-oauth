@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { apiGet, getSessionToken, setSessionToken, clearSessionToken } from "./api";
+import { apiGet, getSessionToken, setSessionToken, clearSessionToken, getAuthStatus } from "./api";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Login from "./components/Login";
@@ -213,8 +213,17 @@ export default function App() {
     captureSessionFromUrl();
 
     if (getSessionToken()) {
-      loadMe().then((ok) => {
-        if (ok) loadRecent();
+      loadMe().then(async (ok) => {
+        if (ok) {
+          const status = await getAuthStatus();
+
+          if (status.needsLogin) {
+            clearSessionToken();
+            setMe({ user: null });
+          } else {
+            loadRecent();
+          }
+        }
       });
     } else {
       setMe({ user: null });

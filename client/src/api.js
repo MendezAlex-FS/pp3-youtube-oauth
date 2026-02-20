@@ -63,9 +63,18 @@ export const apiGet = async (path) => {
 /**
  *
  * Returns the full backend URL used to start Google OAuth login.
- * This is typically used as the href for a "Sign in with Google" button/link.
  *
  * @param {*} none
  * @returns {string} Login URL (example: "http://localhost:3001/api/v1/auth/google/login")
  */
 export const loginUrl = () => `${API_BASE}/auth/google/login`;
+
+/**
+ *
+ * Calls backend to check whether YouTube authorization is still valid.
+ *
+ * @returns {Promise<{ needsLogin: boolean }>}
+ */
+export const getAuthStatus = async () => {
+  return apiGet("/auth/status");
+};

@@ -35,4 +35,14 @@ router.get("/google/callback", auth.callback);
  */
 router.get("/me", requireAuth, auth.me);
 
+/**
+ *
+ * GET /status
+ *
+ * Protected route that returns whether the user needs to
+ * re-authorize YouTube (true/false).
+ *
+ */
+router.get("/status", requireAuth, auth.status);
+
 module.exports = router;

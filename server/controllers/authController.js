@@ -1,5 +1,5 @@
 const db = require("../models");
-const { generatePKCE, getVerifier, exchangeCode } = require("../services/oauthService");
+const { generatePKCE, getVerifier, exchangeCode, refreshAccessToken } = require("../services/oauthService");
 const { sign } = require("../utils/jwt");
 
 /**
@@ -121,4 +121,61 @@ const me = (req, res) => {
   });
 };
 
-module.exports = { login, callback, me };
+/**
+ *
+ * GET /auth/status
+ *
+ * Returns whether the user needs to re-authorize YouTube.
+ * Requires a valid app JWT (requireAuth). Uses DB fields:
+ * accessToken, tokenExpiry, refreshToken.
+ *
+ * @param {*} req Express request object
+ * @param {*} res Express response object
+ * @returns {*} JSON: { needsLogin: boolean }
+ */
+const status = async (req, res) => {
+  try {
+    const user = req.user;
+
+    if (!user?.accessToken) {
+      return res.json({ needsLogin: true });
+    }
+
+    const expiryMs = user.tokenExpiry ? new Date(user.tokenExpiry).getTime() : 0;
+
+    if (!expiryMs) {
+      return res.json({ needsLogin: false });
+    }
+
+    const SKEW_MS = 60 * 1000;
+    const nowMs = Date.now();
+
+    if (nowMs < expiryMs - SKEW_MS) {
+      return res.json({ needsLogin: false });
+    }
+
+    if (!user.refreshToken) {
+      return res.json({ needsLogin: true });
+    }
+
+    const refreshed = await refreshAccessToken(user.refreshToken);
+
+    if (!refreshed || refreshed.error || !refreshed.access_token || !refreshed.expires_in) {
+      return res.json({ needsLogin: true });
+    }
+
+    user.accessToken = refreshed.access_token;
+    user.tokenExpiry = new Date(Date.now() + Number(refreshed.expires_in) * 1000);
+
+    if (refreshed.refresh_token) user.refreshToken = refreshed.refresh_token;
+
+    await user.save();
+
+    return res.json({ needsLogin: false });
+  } catch {
+    return res.json({ needsLogin: true });
+  }
+};
+
+
+module.exports = { login, callback, me, status };
