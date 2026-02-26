@@ -12,9 +12,14 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+
+  "overrides": {
+    "minimatch": "^9.0.5"
+  },
+  
   "devDependencies": {
     "nodemon": "^3.1.11",
-    "sequelize-cli": "^6.6.5"
+    "sequelize-cli": "^6.6.2"
   },
   "dependencies": {
     "cors": "^2.8.6",
