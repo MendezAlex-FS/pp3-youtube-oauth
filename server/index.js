@@ -6,7 +6,8 @@ const morgan = require("morgan");
 const authRoutes = require('./routes/authRoutes.js')
 const youTubeRoutes = require('./routes/youTubeRoutes.js')
 const env = process.env.NODE_ENV || 'development';
-const db = require("./config/config.js")[env];
+// Commenting to deploy in vercel.com
+//const db = require("./config/config.js")[env];
 
 // Create a new Express instance called "app"
 const app = express();
@@ -15,8 +16,9 @@ const app = express();
 app.use(morgan("dev"));  // Mainly for debugging. Logs req in console.
 app.use(express.json()); // Put all data in req.body
 app.use(cors({
-  origin: process.env.CLIENT_ORIGIN,
-  allowedHeaders: ["Content-Type", "Authorization"]
+  origin: true,
+  allowedHeaders: ["Content-Type", "Authorization"],
+  credentials: true
 })); // Handles the CORs policies
 
 // Making at '/api/v1' as root service up routes
@@ -52,23 +54,21 @@ app.use((err, req, res, next) => {
   });
 });
 
-//TODO: Temporary code for week 1.
-const port = process.env.PORT || 3001;
+// Commenting to deploy in vercel.com
+// const port = process.env.PORT || 3001;
 
-console.log("------- Env Vars -------");
-console.log("PORT=" + port);
-console.log("NODE_ENV=" + env);
-console.log("DB_USER=" + db.username);
-console.log("DB_PASS=" + db.password);
-console.log("DB_NAME=" + db.database);
-console.log("DB_HOST=" + db.host);
-console.log("GOOGLE_CLIENT_ID=" + process.env.GOOGLE_CLIENT_ID);
-console.log("GOOGLE_CLIENT_SECRET=" + process.env.GOOGLE_CLIENT_SECRET);
-console.log("GOOGLE_REDIRECT_URI=" + process.env.GOOGLE_REDIRECT_URI);
-console.log("JWT_SECRET=" + process.env.JWT_SECRET);
-console.log("CLIENT_ORIGIN=" + process.env.CLIENT_ORIGIN);
-console.log("------- /Env Vars -------");
+// console.log("------- Env Vars -------");
+// console.log("PORT=" + port);
+// console.log("NODE_ENV=" + env);
+// console.log("DB_USER=" + db.username);
+// console.log("DB_PASS=" + db.password);
+// console.log("DB_NAME=" + db.database);
+// console.log("DB_HOST=" + db.host);
+// console.log("GOOGLE_CLIENT_ID=" + process.env.GOOGLE_CLIENT_ID);
+// console.log("GOOGLE_CLIENT_SECRET=" + process.env.GOOGLE_CLIENT_SECRET);
+// console.log("GOOGLE_REDIRECT_URI=" + process.env.GOOGLE_REDIRECT_URI);
+// console.log("JWT_SECRET=" + process.env.JWT_SECRET);
+// console.log("CLIENT_ORIGIN=" + process.env.CLIENT_ORIGIN);
+// console.log("------- /Env Vars -------");
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+module.exports = app;
